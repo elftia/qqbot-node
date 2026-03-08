@@ -15,7 +15,9 @@
   "files": [
     "dist",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "README.en.md",
+    "README.ja.md"
   ],
   "scripts": {
     "build": "tsup",
@@ -54,6 +56,10 @@
   "homepage": "https://github.com/elftia/qqbot-node#readme",
   "bugs": {
     "url": "https://github.com/elftia/qqbot-node/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">=18.0.0"
