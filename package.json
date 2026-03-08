@@ -1,6 +1,6 @@
 {
   "name": "@elftia/qqbot-node",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "QQ Bot SDK for Node.js — full-featured QQ Open Platform API v2 client with WebSocket gateway, rich media, SILK audio, and intent degradation",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

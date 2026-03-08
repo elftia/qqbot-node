@@ -8,6 +8,8 @@
  */
 
 import { EventEmitter } from 'node:events';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import WebSocket from 'ws';
 import type {
   WSPayload, QQChatType, C2CMessageEvent, GuildMessageEvent, GroupMessageEvent,
@@ -135,6 +137,8 @@ export interface GatewayOptions {
   clientSecret: string;
   logger?: QQBotLogger;
   sessionStore?: SessionStore;
+  /** Directory for downloading attachments. If set, attachments are downloaded locally before emitting. */
+  downloadDir?: string;
 }
 
 /**
@@ -694,6 +698,9 @@ export class QQBotGateway extends EventEmitter {
       while (queue.length > 0 && !this.aborted) {
         const msg = queue.shift()!;
         try {
+          if (this.opts.downloadDir && msg.attachments?.length) {
+            await this.downloadAttachments(msg);
+          }
           this.emit('message', msg);
         } catch (err) {
           this.log.error(`Message emit error for ${peerId}: ${err}`);
@@ -708,6 +715,56 @@ export class QQBotGateway extends EventEmitter {
           break;
         }
       }
+    }
+  }
+
+  // ── Attachment download ─────────────────────────────────────
+
+  private async downloadAttachments(msg: GatewayMessage): Promise<void> {
+    const dir = this.opts.downloadDir!;
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    for (const att of msg.attachments!) {
+      try {
+        const localPath = await this.downloadFile(att.url, dir, att.filename);
+        if (localPath) {
+          att.localPath = localPath;
+        }
+      } catch (err) {
+        this.log.error(`Attachment download failed for ${att.filename ?? att.url}: ${err}`);
+      }
+    }
+  }
+
+  private async downloadFile(url: string, destDir: string, originalFilename?: string): Promise<string | null> {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        this.log.error(`Download failed: HTTP ${response.status} for ${url}`);
+        return null;
+      }
+
+      const buffer = Buffer.from(await response.arrayBuffer());
+
+      let finalFilename: string;
+      if (originalFilename) {
+        const ext = path.extname(originalFilename);
+        const baseName = path.basename(originalFilename, ext);
+        finalFilename = `${baseName}_${Date.now()}${ext}`;
+      } else {
+        const randomId = Math.random().toString(36).slice(2, 10);
+        finalFilename = `${Date.now()}_${randomId}.bin`;
+      }
+
+      const filePath = path.join(destDir, finalFilename);
+      fs.writeFileSync(filePath, buffer);
+      this.log.info(`Downloaded attachment: ${filePath}`);
+      return filePath;
+    } catch (err) {
+      this.log.error(`Download error: ${err}`);
+      return null;
     }
   }
 }

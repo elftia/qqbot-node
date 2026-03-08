@@ -89,6 +89,8 @@ export interface GatewayMessage {
     filename?: string;
     size?: number;
     voice_wav_url?: string;
+    /** Local file path after download (only when downloadDir is configured) */
+    localPath?: string;
   }>;
 }
 
