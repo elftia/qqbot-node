@@ -1,6 +1,6 @@
 {
   "name": "@elftia/qqbot-node",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "QQ Bot SDK for Node.js — full-featured QQ Open Platform API v2 client with WebSocket gateway, rich media, SILK audio, and intent degradation",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -51,7 +51,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/elftia/qqbot-node.git"
+    "url": "git+https://github.com/elftia/qqbot-node.git"
   },
   "homepage": "https://github.com/elftia/qqbot-node#readme",
   "bugs": {

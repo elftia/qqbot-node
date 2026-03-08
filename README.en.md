@@ -6,7 +6,7 @@ QQ Bot SDK for Node.js — a complete implementation of [QQ Open Platform API v2
 
 ## Why
 
-[OpenClaw](https://github.com/open-claw) and its lightweight forks (such as [Elftia](https://github.com/elftia), [MoltBot](https://github.com/moltbot), etc.) all need QQ Bot integration. Having each project reimplement the QQ protocol layer is wasteful and error-prone.
+[OpenClaw](https://github.com/openclaw/openclaw) and its lightweight forks (such as [Elftia](https://github.com/elftia), etc.) all need QQ Bot integration. Having each project reimplement the QQ protocol layer is wasteful and error-prone.
 
 This SDK extracts the QQ Bot protocol layer into a standalone, framework-agnostic npm package, so any claw-family project — or any Node.js project — can integrate QQ Bot with a single `npm install`, without worrying about WebSocket reconnection, SILK codec, token refresh, and other low-level details.
 
@@ -84,7 +84,7 @@ This SDK is designed as a low-level dependency for the claw ecosystem. Each claw
 
 ```
 ┌─────────────────────────────────────────────┐
-│  OpenClaw / Elftia / MoltBot / YourProject  │  ← claw framework layer
+│  OpenClaw / Elftia / YourProject             │  ← claw framework layer
 ├─────────────────────────────────────────────┤
 │  Thin Adapter (channel plugin)              │  ← adapter layer (~200 lines)
 ├─────────────────────────────────────────────┤
@@ -281,7 +281,7 @@ interface SessionStore {
 |---------|-------------|
 | [@sliverp/qqbot](https://github.com/sliverp/qqbot) | OpenClaw QQ Bot channel plugin — the inspiration for this SDK |
 | [@elftia/channel-qqbot](https://github.com/elftia/elftia) | Elftia's QQ Bot adapter layer, built on this SDK |
-| [OpenClaw](https://github.com/open-claw) | AI chat framework, one of the primary consumers of this SDK |
+| [OpenClaw](https://github.com/openclaw/openclaw) | AI chat framework, one of the primary consumers of this SDK |
 
 ## Prerequisites
 

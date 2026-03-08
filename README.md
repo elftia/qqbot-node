@@ -6,7 +6,7 @@ QQ Bot SDK for Node.js — [QQ Open Platform API v2](https://bot.q.qq.com/wiki/d
 
 ## Why
 
-[OpenClaw](https://github.com/open-claw) 及其各种轻量级复刻项目（如 [Elftia](https://github.com/elftia)、[MoltBot](https://github.com/moltbot) 等）都需要接入 QQ Bot，但各项目重复实现 QQ 协议层既浪费又容易出 bug。
+[OpenClaw](https://github.com/openclaw/openclaw) 及其各种轻量级复刻项目（如 [Elftia](https://github.com/elftia) 等）都需要接入 QQ Bot，但各项目重复实现 QQ 协议层既浪费又容易出 bug。
 
 本 SDK 将 QQ Bot 的协议层抽离为独立的、框架无关的 npm 包，让任何 claw 类项目——以及任何 Node.js 项目——都能通过 `npm install` 一行命令接入 QQ Bot，无需关心 WebSocket 重连、SILK 编解码、Token 刷新等底层细节。
 
@@ -84,7 +84,7 @@ await gateway.start();
 
 ```
 ┌─────────────────────────────────────────────┐
-│  OpenClaw / Elftia / MoltBot / YourProject  │  ← claw 框架层
+│  OpenClaw / Elftia / YourProject             │  ← claw 框架层
 ├─────────────────────────────────────────────┤
 │  Thin Adapter (channel plugin)              │  ← 适配层（~200 行）
 ├─────────────────────────────────────────────┤
@@ -384,7 +384,7 @@ The gateway automatically downgrades intents when the bot lacks permissions:
 |---------|-------------|
 | [@sliverp/qqbot](https://github.com/sliverp/qqbot) | OpenClaw QQ Bot channel plugin — 本 SDK 的灵感来源 |
 | [@elftia/channel-qqbot](https://github.com/elftia/elftia) | Elftia 的 QQ Bot 适配层，基于本 SDK |
-| [OpenClaw](https://github.com/open-claw) | AI 聊天框架，本 SDK 的主要使用场景之一 |
+| [OpenClaw](https://github.com/openclaw/openclaw) | AI 聊天框架，本 SDK 的主要使用场景之一 |
 
 ## Prerequisites
 
